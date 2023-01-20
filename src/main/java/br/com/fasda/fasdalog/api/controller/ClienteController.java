@@ -66,7 +66,7 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clienteRepository.deleteById(clienteId);
+		catalogoClienteService.excluir(clienteId);
 		
 		return ResponseEntity.noContent().build();
 	}
