@@ -1,7 +1,6 @@
 package br.com.fasda.fasdalog.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fasda.fasdalog.domain.model.Cliente;
 import br.com.fasda.fasdalog.domain.repository.ClienteRepository;
+import br.com.fasda.fasdalog.domain.service.CatalogoClienteService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 public class ClienteController {
 	
 	private ClienteRepository clienteRepository;
+	private CatalogoClienteService catalogoClienteService;
 	
 	@GetMapping
 	public List<Cliente> listar() {
@@ -43,7 +44,7 @@ public class ClienteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-		return clienteRepository.save(cliente);
+		return catalogoClienteService.salvar(cliente);
 	}
 	
 	@PutMapping("/{clienteId}")
@@ -54,7 +55,7 @@ public class ClienteController {
 		}
 		
 		cliente.setId(clienteId);
-		cliente = clienteRepository.save(cliente);
+		cliente = catalogoClienteService.salvar(cliente);
 		
 		return ResponseEntity.ok(cliente);
 	}
